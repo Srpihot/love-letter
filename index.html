@@ -15,7 +15,7 @@
         
         body {
             background-color: #f8f6f1;
-            font-family: 'Long Cang', cursive;
+            font-family: 'Ma Shan Zheng', cursive;
             color: #333;
             line-height: 1.8;
             overflow-x: hidden;
@@ -72,6 +72,7 @@
         
         .letter-body {
             font-size: 1.1rem;
+            font-family: 'Ma Shan Zheng', cursive;
         }
         
         .letter-body p {
@@ -125,6 +126,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 1.5s, transform 1.5s;
+            font-family: 'Ma Shan Zheng', cursive;
         }
         
         .references.visible {
@@ -265,51 +267,228 @@
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        /* 密码验证样式 */
+        #passwordScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f8f6f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        .password-box {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .password-box h2 {
+            color: #8e7f6a;
+            margin-bottom: 20px;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .heart-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #8e7f6a;
+            animation: pulse 1.5s infinite;
+        }
+        
+                    #passwordInput {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 20px 0;
+            border: 2px solid #d8d0c3;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            letter-spacing: 4px;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        #passwordInput:focus {
+            outline: none;
+            border-color: #8e7f6a;
+        }
+        
+                    #submitButton {
+            background-color: #8e7f6a;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-family: 'Ma Shan Zheng', cursive;
+            transition: background-color 0.3s;
+        }
+        
+        #submitButton:hover {
+            background-color: #776c5b;
+        }
+        
+        .password-hint {
+            color: #8e7f6a;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        
+        #errorMessage {
+            color: #c75050;
+            margin-top: 10px;
+            height: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        #errorMessage.show {
+            opacity: 1;
+        }
+        
+        .hide {
+            display: none !important;
+        }
+        
+        #contentArea {
+            display: none;
+        }
+        
+        #contentArea.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="paper">
-            <div class="flower-decoration">
-                <div class="flower" style="left: 20px; top: 10px;"></div>
-                <div class="flower" style="left: 50px; top: 0px;"></div>
-                <div class="flower" style="left: 80px; top: 15px;"></div>
-            </div>
-            
-            <h1>给蒋小姐的情书</h1>
-            
-            <div class="date">2025年春</div>
-            
-            <div class="letter-body">
-                <p>亲爱的蒋小姐，您好，见字如面。北平的紫玉兰又开了。我站在树下，忽然觉得，这满树的花，每一瓣都在替我重复着同一句话——我知道这个叫紫玉兰！必须坦白，我的文笔比未经调参的线性回归还要直白，但有些情话像显著性检验的一样，不做共线性处理就不显著了。</p>
+    <!-- 密码验证屏幕 -->
+    <div id="passwordScreen">
+        <div class="password-box">
+            <div class="heart-icon">💌</div>
+            <h2>给蒋小姐的情书</h2>
+            <p style="font-family: 'Ma Shan Zheng', cursive;">这是一封需要密码才能查看的情书</p>
+            <input type="text" id="passwordInput" placeholder="请输入密码" autocomplete="off">
+            <div id="errorMessage">密码不正确，请重试</div>
+            <button id="submitButton">打开情书</button>
+            <p class="password-hint" style="font-family: 'Ma Shan Zheng', cursive;">提示：您的姓氏缩写</p>
+        </div>
+    </div>
+
+    <!-- 内容区域 -->
+    <div id="contentArea">
+        <div class="container">
+            <div class="paper">
+                <div class="flower-decoration">
+                    <div class="flower" style="left: 20px; top: 10px;"></div>
+                    <div class="flower" style="left: 50px; top: 0px;"></div>
+                    <div class="flower" style="left: 80px; top: 15px;"></div>
+                </div>
                 
-                <p>还记得香山那个秋天吗？漫山的枫叶一点也没红，但我的心跳与你的笑容却呈现出0.99的极度正相关（P&lt;0.001,***），这个结果表明目前这个世上再没有比这更显著的关联<span class="love-emoji">[1]</span>。我假装低头摆弄手中的相机，其实是在用目光一遍遍描摹你的轮廓，像我毕业论文中的堆叠模型一样<span class="love-emoji">[2]</span>，试图把你的每一个细节都刻在记忆矩阵里，但再精密的模型，也不及下次见到你时，那真实的心跳频率。</p>
+                <h1>给蒋小姐的情书</h1>
                 
-                <p>后来在青岛的海边，潮水一遍遍描摹着沙滩的轮廓，你望向海鸥，我望向你。规划路线时，我其实更希望用最短路径算法算出离你手心的距离。你总说我的心思难猜，你明明一眼就看穿了我藏在每一句玩笑背后的思念。桌游时你瞳孔里闪烁的蒙特卡洛模拟，当刺客的刀锋转向梅林那一刻，你说"怎么最后才进攻"——拜托，在你95%的置信区间里，连刺客都会选择缴械投降（注：夸你好看）。</p>
+                <div class="date">2025年春</div>
                 
-                <p>说起《红楼梦》里的太虚幻境，那也是我的梦境开始的地方。那天我用笨拙的语句说出"我喜欢你"，平时很好笑的我，竟找不出一个合适的段子。"假作真时真亦假"，其实，不是我不够好笑，而是有些真心话，实在不该被当作玩笑，真的，并不是我不好笑。你总问我喜欢你哪一点，我想说，把大观园攻略写成比随机梯度下降（Stochastic Gradient Descent，SGD)更精妙的优化算法<span class="love-emoji">[3]</span>。不由的让我想起阿里巴巴讲的一千零一夜里的一个故事，小狗和小猫出游，小猫说"人类常放屁，但你不放，应该不是P人"，小狗答"确实，我是狗人（J人）"。</p>
+                <div class="letter-body">
+                    <p>亲爱的蒋小姐，您好，见字如面。北平的紫玉兰又开了。我站在树下，忽然觉得，这满树的花，每一瓣都在替我重复着同一句话——我知道这个叫紫玉兰！必须坦白，我的文笔比未经调参的线性回归还要直白，但有些情话像显著性检验的一样，不做共线性处理就不显著了。</p>
+                    
+                    <p>还记得香山那个秋天吗？漫山的枫叶一点也没红，但我的心跳与你的笑容却呈现出0.99的极度正相关（P&lt;0.001,***），这个结果表明目前这个世上再没有比这更显著的关联[1]。我假装低头摆弄手中的相机，其实是在用目光一遍遍描摹你的轮廓，像我毕业论文中的堆叠模型一样[2]，试图把你的每一个细节都刻在记忆矩阵里，但再精密的模型，也不及下次见到你时，那真实的心跳频率。</p>
+                    
+                    <p>后来在青岛的海边，潮水一遍遍描摹着沙滩的轮廓，你望向海鸥，我望向你。规划路线时，我其实更希望用最短路径算法算出离你手心的距离。你总说我的心思难猜，你明明一眼就看穿了我藏在每一句玩笑背后的思念。桌游时你瞳孔里闪烁的蒙特卡洛模拟，当刺客的刀锋转向梅林那一刻，你说"怎么最后才进攻"——拜托，在你95%的置信区间里，连刺客都会选择缴械投降（注：夸你好看）。</p>
+                    
+                    <p>说起《红楼梦》里的太虚幻境，那也是我的梦境开始的地方。那天我用笨拙的语句说出"我喜欢你"，平时很好笑的我，竟找不出一个合适的段子。"假作真时真亦假"，其实，不是我不够好笑，而是有些真心话，实在不该被当作玩笑，真的，并不是我不好笑。你总问我喜欢你哪一点，我想说，把大观园攻略写成比随机梯度下降（Stochastic Gradient Descent，SGD)更精妙的优化算法[3]。不由的让我想起阿里巴巴讲的一千零一夜里的一个故事，小狗和小猫出游，小猫说"人类常放屁，但你不放，应该不是P人"，小狗答"确实，我是狗人（J人）"。</p>
+                    
+                    <p>蒋小姐，这世上有太多精密的算法，却算不出我见你时心跳的轨迹；有无数严谨的公式，却解不开你一个微笑的涵义。如果非要给我的心动建模，那它一定是个永远过拟合的模型——因为所有的参数，都只与你有关。</p>
+                    
+                    <p>所以，在下一个紫玉兰沾露的清晨，我能不能带着一捧紫玉兰（如果需要我吹起来也可以），在你下班的路口等你？那里没有复杂的厕所数量预测，只有一个最简单的零假设：我想和你一起，看看春天，看看未来，看看所有尚未被机器学习预测出的美好。</p>
+                    
+                    <div class="signature">来自 春风里数错心跳的</br>脱口秀大王</div>
+                </div>
                 
-                <p>蒋小姐，这世上有太多精密的算法，却算不出我见你时心跳的轨迹；有无数严谨的公式，却解不开你一个微笑的涵义。如果非要给我的心动建模，那它一定是个永远过拟合的模型——因为所有的参数，都只与你有关。</p>
-                
-                <p>所以，在下一个紫玉兰沾露的清晨，我能不能带着一捧紫玉兰（如果需要我吹起来也可以），在你下班的路口等你？那里没有复杂的厕所数量预测，只有一个最简单的零假设：我想和你一起，看看春天，看看未来，看看所有尚未被机器学习预测出的美好。</p>
-                
-                <div class="signature">此致 春风里数错心跳的脱口秀大王</div>
-            </div>
-            
-            <div class="references">
-                <h3>参考文献</h3>
-                <p>[1] 孙培豪,基于脉搏法中心跳加速与蒋梦晓笑容的相关性研究.环发所恋爱期刊[J],2024,11+06.</p>
-                <p>[2]孙培豪,基于多模型融合技术的玉米秸秆草谷比速测方法与系统研究[D],中国农业科学院研究生院,2025.</p>
-                <p>[3]Amari S. Backpropagation and stochastic gradient descent method[J]. Neurocomputing, 1993, 5(4-5): 185-196.</p>
+                <div class="references">
+                    <h3>参考文献</h3>
+                    <p>[1] 孙培豪,基于脉搏法中心跳加速与蒋梦晓笑容的相关性研究.环发所恋爱期刊[J],2024,11+06.</p>
+                    <p>[2]孙培豪,基于多模型融合技术的玉米秸秆草谷比速测方法与系统研究[D],中国农业科学院研究生院,2025.</p>
+                    <p>[3]Amari S. Backpropagation and stochastic gradient descent method[J]. Neurocomputing, 1993, 5(4-5): 185-196.</p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // 直接执行的脚本，确保简单且可靠
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取页面元素
+            var passwordScreen = document.getElementById('passwordScreen');
+            var contentArea = document.getElementById('contentArea');
+            var passwordInput = document.getElementById('passwordInput');
+            var submitButton = document.getElementById('submitButton');
+            var errorMessage = document.getElementById('errorMessage');
+            
+            // 聚焦到密码输入框
+            passwordInput.focus();
+            
+            // 验证密码函数
+            function checkPassword() {
+                var password = passwordInput.value.trim().toLowerCase();
+                
+                if (password === 'jmx') {
+                    // 密码正确，隐藏密码屏幕，显示内容
+                    passwordScreen.classList.add('hide');
+                    contentArea.classList.add('show');
+                    
+                    // 启动动画效果
+                    setTimeout(function() {
+                        createPetals();
+                        createHearts();
+                        typewriterEffect();
+                    }, 100);
+                } else {
+                    // 密码错误，显示错误消息
+                    errorMessage.classList.add('show');
+                    
+                    // 添加震动效果
+                    passwordInput.style.animation = 'none';
+                    setTimeout(function() {
+                        passwordInput.style.animation = 'shake 0.5s';
+                    }, 10);
+                    
+                    // 2秒后隐藏错误消息
+                    setTimeout(function() {
+                        errorMessage.classList.remove('show');
+                    }, 2000);
+                }
+            }
+            
+            // 点击按钮验证密码
+            submitButton.addEventListener('click', checkPassword);
+            
+            // 按回车键验证密码
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+        });
+        
         // 添加飘落的花瓣
         function createPetals() {
             const numberOfPetals = 20;
-            const container = document.querySelector('.container');
             
             for (let i = 0; i < numberOfPetals; i++) {
                 const petal = document.createElement('div');
@@ -333,7 +512,6 @@
         // 添加漂浮的心形
         function createHearts() {
             const numberOfHearts = 15;
-            const container = document.querySelector('.container');
             const hearts = ['❤️', '💕', '💗', '💞', '💓'];
             
             for (let i = 0; i < numberOfHearts; i++) {
@@ -449,36 +627,14 @@
                         currentParagraph.classList.remove('typing');
                     }
                 }
-                
-                // 检查是否应显示签名和参考文献
-                if (currentParagraphIndex >= paragraphs.length && 
-                    isInViewport(signature) && 
-                    isInViewport(references)) {
-                    signature.classList.add('visible');
-                    setTimeout(() => {
-                        references.classList.add('visible');
-                    }, 500);
-                }
             }
             
             // 初始检查
-            checkScroll();
+            typeText();
             
             // 滚动时检查
             window.addEventListener('scroll', checkScroll);
-            
-            // 开始第一段的打字效果
-            if (paragraphs.length > 0 && isInViewport(paragraphs[0])) {
-                typeText();
-            }
         }
-        
-        // Run all effects
-        document.addEventListener('DOMContentLoaded', function() {
-            createPetals();
-            createHearts();
-            typewriterEffect();
-        });
     </script>
 </body>
 </html>
