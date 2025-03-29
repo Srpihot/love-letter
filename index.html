@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给蒋小姐的情书</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Long+Cang&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #f8f6f1;
+            font-family: 'Long Cang', cursive;
+            color: #333;
+            line-height: 1.8;
+            overflow-x: hidden;
+            font-size: 1.2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .paper {
+            background-image: 
+                linear-gradient(90deg, transparent 39px, #c7c2b8 39px, #c7c2b8 41px, transparent 41px),
+                linear-gradient(#eee .1em, transparent .1em);
+            background-size: 100% 1.8em;
+            border-radius: 10px;
+            padding: 30px 50px 50px;
+            box-shadow: 0 5px 25px rgba(199, 194, 184, 0.3);
+            position: relative;
+            margin-bottom: 50px;
+        }
+        
+        .paper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect x="0" y="0" width="100" height="100" fill="none" stroke="%23c7c2b8" stroke-width="2"/></svg>');
+            background-size: 20px 20px;
+            border-radius: 10px;
+            z-index: -1;
+        }
+        
+        h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            color: #8e7f6a;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(142, 127, 106, 0.2);
+        }
+        
+        .date {
+            text-align: right;
+            margin-bottom: 30px;
+            color: #888;
+        }
+        
+        .letter-body {
+            font-size: 1.1rem;
+        }
+        
+        .letter-body p {
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
+            position: relative;
+            text-indent: 2em;
+        }
+        
+        .letter-body p.typing::after {
+            content: '';
+            position: absolute;
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: #8e7f6a;
+            margin-left: 2px;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+        
+        .letter-body p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.5rem;
+            color: #8e7f6a;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.5s, transform 1.5s;
+        }
+        
+        .signature.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .references {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #666;
+            border-top: 1px dashed #c7c2b8;
+            padding-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.5s, transform 1.5s;
+        }
+        
+        .references.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .references h3 {
+            margin-bottom: 10px;
+            color: #8e7f6a;
+        }
+        
+        .references p {
+            margin-bottom: 8px;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #b5a99a;
+            animation: float 3s infinite ease-in-out;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        .typewriter-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background-color: #8e7f6a;
+            margin-left: 2px;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .paper {
+                padding: 20px 25px 30px;
+                margin-bottom: 30px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .letter-body {
+                font-size: 1.1rem;
+            }
+            
+            body {
+                font-size: 1.1rem;
+            }
+        }
+        
+        .flower-decoration {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 60px;
+            overflow: hidden;
+            z-index: 10;
+        }
+        
+        .flower {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #d8d0c3;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(216, 208, 195, 0.8);
+        }
+        
+        .flower::before, .flower::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #d8d0c3;
+            border-radius: 50%;
+        }
+        
+        .flower::before {
+            left: -7px;
+            top: -7px;
+        }
+        
+        .flower::after {
+            right: -7px;
+            top: -7px;
+        }
+        
+        .falling-petal {
+            position: fixed;
+            top: -10px;
+            background-color: #d8d0c3;
+            width: 15px;
+            height: 15px;
+            border-radius: 15px 0;
+            opacity: 0.6;
+            animation: falling linear infinite;
+        }
+        
+        @keyframes falling {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg) scale(0.5);
+                opacity: 0.2;
+            }
+        }
+        
+        .love-emoji {
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+            transform-origin: center;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="paper">
+            <div class="flower-decoration">
+                <div class="flower" style="left: 20px; top: 10px;"></div>
+                <div class="flower" style="left: 50px; top: 0px;"></div>
+                <div class="flower" style="left: 80px; top: 15px;"></div>
+            </div>
+            
+            <h1>给蒋小姐的情书</h1>
+            
+            <div class="date">2025年春</div>
+            
+            <div class="letter-body">
+                <p>亲爱的蒋小姐，您好，见字如面。北平的紫玉兰又开了。我站在树下，忽然觉得，这满树的花，每一瓣都在替我重复着同一句话——我知道这个叫紫玉兰！必须坦白，我的文笔比未经调参的线性回归还要直白，但有些情话像显著性检验的一样，不做共线性处理就不显著了。</p>
+                
+                <p>还记得香山那个秋天吗？漫山的枫叶一点也没红，但我的心跳与你的笑容却呈现出0.99的极度正相关（P&lt;0.001,***），这个结果表明目前这个世上再没有比这更显著的关联<span class="love-emoji">[1]</span>。我假装低头摆弄手中的相机，其实是在用目光一遍遍描摹你的轮廓，像我毕业论文中的堆叠模型一样<span class="love-emoji">[2]</span>，试图把你的每一个细节都刻在记忆矩阵里，但再精密的模型，也不及下次见到你时，那真实的心跳频率。</p>
+                
+                <p>后来在青岛的海边，潮水一遍遍描摹着沙滩的轮廓，你望向海鸥，我望向你。规划路线时，我其实更希望用最短路径算法算出离你手心的距离。你总说我的心思难猜，你明明一眼就看穿了我藏在每一句玩笑背后的思念。桌游时你瞳孔里闪烁的蒙特卡洛模拟，当刺客的刀锋转向梅林那一刻，你说"怎么最后才进攻"——拜托，在你95%的置信区间里，连刺客都会选择缴械投降（注：夸你好看）。</p>
+                
+                <p>说起《红楼梦》里的太虚幻境，那也是我的梦境开始的地方。那天我用笨拙的语句说出"我喜欢你"，平时很好笑的我，竟找不出一个合适的段子。"假作真时真亦假"，其实，不是我不够好笑，而是有些真心话，实在不该被当作玩笑，真的，并不是我不好笑。你总问我喜欢你哪一点，我想说，把大观园攻略写成比随机梯度下降（Stochastic Gradient Descent，SGD)更精妙的优化算法<span class="love-emoji">[3]</span>。不由的让我想起阿里巴巴讲的一千零一夜里的一个故事，小狗和小猫出游，小猫说"人类常放屁，但你不放，应该不是P人"，小狗答"确实，我是狗人（J人）"。</p>
+                
+                <p>蒋小姐，这世上有太多精密的算法，却算不出我见你时心跳的轨迹；有无数严谨的公式，却解不开你一个微笑的涵义。如果非要给我的心动建模，那它一定是个永远过拟合的模型——因为所有的参数，都只与你有关。</p>
+                
+                <p>所以，在下一个紫玉兰沾露的清晨，我能不能带着一捧紫玉兰（如果需要我吹起来也可以），在你下班的路口等你？那里没有复杂的厕所数量预测，只有一个最简单的零假设：我想和你一起，看看春天，看看未来，看看所有尚未被机器学习预测出的美好。</p>
+                
+                <div class="signature">此致 春风里数错心跳的脱口秀大王</div>
+            </div>
+            
+            <div class="references">
+                <h3>参考文献</h3>
+                <p>[1] 孙培豪,基于脉搏法中心跳加速与蒋梦晓笑容的相关性研究.环发所恋爱期刊[J],2024,11+06.</p>
+                <p>[2]孙培豪,基于多模型融合技术的玉米秸秆草谷比速测方法与系统研究[D],中国农业科学院研究生院,2025.</p>
+                <p>[3]Amari S. Backpropagation and stochastic gradient descent method[J]. Neurocomputing, 1993, 5(4-5): 185-196.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 添加飘落的花瓣
+        function createPetals() {
+            const numberOfPetals = 20;
+            const container = document.querySelector('.container');
+            
+            for (let i = 0; i < numberOfPetals; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('falling-petal');
+                
+                // 随机位置和动画时间
+                const leftPos = Math.random() * 100;
+                const animDuration = Math.random() * 10 + 5;
+                const animDelay = Math.random() * 5;
+                const rotate = Math.random() * 360;
+                
+                petal.style.left = `${leftPos}vw`;
+                petal.style.animationDuration = `${animDuration}s`;
+                petal.style.animationDelay = `${animDelay}s`;
+                petal.style.transform = `rotate(${rotate}deg)`;
+                
+                document.body.appendChild(petal);
+            }
+        }
+        
+        // 添加漂浮的心形
+        function createHearts() {
+            const numberOfHearts = 15;
+            const container = document.querySelector('.container');
+            const hearts = ['❤️', '💕', '💗', '💞', '💓'];
+            
+            for (let i = 0; i < numberOfHearts; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                
+                // 随机位置和动画时间
+                const leftPos = Math.random() * 100;
+                const topPos = Math.random() * 100;
+                const animDuration = Math.random() * 3 + 2;
+                const animDelay = Math.random() * 2;
+                
+                heart.style.left = `${leftPos}vw`;
+                heart.style.top = `${topPos}vh`;
+                heart.style.animationDuration = `${animDuration}s`;
+                heart.style.animationDelay = `${animDelay}s`;
+                
+                document.body.appendChild(heart);
+            }
+        }
+        
+        // 打字机效果
+        function typewriterEffect() {
+            const paragraphs = document.querySelectorAll('.letter-body p');
+            const signature = document.querySelector('.signature');
+            const references = document.querySelector('.references');
+            
+            let currentParagraphIndex = 0;
+            let currentCharIndex = 0;
+            let typingInterval;
+            let originalTexts = [];
+            
+            // 保存原始文本内容并清空段落
+            paragraphs.forEach(paragraph => {
+                originalTexts.push(paragraph.innerHTML);
+                paragraph.innerHTML = '';
+            });
+            
+            // 检查元素是否在视口中
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.bottom >= 0
+                );
+            }
+            
+            // 打字效果函数
+            function typeText() {
+                // 如果已经处理完所有段落，则结束并显示签名和参考文献
+                if (currentParagraphIndex >= paragraphs.length) {
+                    // 当所有文字打印完成后，显示签名和参考文献
+                    setTimeout(() => {
+                        signature.classList.add('visible');
+                        setTimeout(() => {
+                            references.classList.add('visible');
+                        }, 500);
+                    }, 800);
+                    return;
+                }
+                
+                const currentParagraph = paragraphs[currentParagraphIndex];
+                
+                // 如果当前段落不在视口中，等待滚动
+                if (!isInViewport(currentParagraph)) {
+                    currentParagraph.classList.remove('typing');
+                    return;
+                }
+                
+                // 确保段落可见
+                currentParagraph.classList.add('visible');
+                currentParagraph.classList.add('typing');
+                
+                const originalText = originalTexts[currentParagraphIndex];
+                
+                // 如果尚未完成当前段落的打字
+                if (currentCharIndex < originalText.length) {
+                    // 逐字添加内容
+                    currentParagraph.innerHTML = originalText.substring(0, currentCharIndex + 1);
+                    currentCharIndex++;
+                    
+                    // 随机打字速度，模拟真实打字效果
+                    const typingSpeed = Math.random() * 50 + 30;
+                    clearTimeout(typingInterval);
+                    typingInterval = setTimeout(typeText, typingSpeed);
+                } else {
+                    // 当前段落完成，进入下一段
+                    currentParagraph.classList.remove('typing');
+                    currentParagraphIndex++;
+                    currentCharIndex = 0;
+                    
+                    // 短暂停顿后开始下一段
+                    clearTimeout(typingInterval);
+                    typingInterval = setTimeout(typeText, 500);
+                }
+            }
+            
+            // 滚动时检查开始打字
+            function checkScroll() {
+                if (currentParagraphIndex < paragraphs.length) {
+                    const currentParagraph = paragraphs[currentParagraphIndex];
+                    
+                    if (isInViewport(currentParagraph)) {
+                        // 如果当前没有正在进行打字动画，则开始
+                        if (!typingInterval) {
+                            typeText();
+                        }
+                    } else {
+                        // 如果滚出视口，停止打字
+                        clearTimeout(typingInterval);
+                        typingInterval = null;
+                        currentParagraph.classList.remove('typing');
+                    }
+                }
+                
+                // 检查是否应显示签名和参考文献
+                if (currentParagraphIndex >= paragraphs.length && 
+                    isInViewport(signature) && 
+                    isInViewport(references)) {
+                    signature.classList.add('visible');
+                    setTimeout(() => {
+                        references.classList.add('visible');
+                    }, 500);
+                }
+            }
+            
+            // 初始检查
+            checkScroll();
+            
+            // 滚动时检查
+            window.addEventListener('scroll', checkScroll);
+            
+            // 开始第一段的打字效果
+            if (paragraphs.length > 0 && isInViewport(paragraphs[0])) {
+                typeText();
+            }
+        }
+        
+        // Run all effects
+        document.addEventListener('DOMContentLoaded', function() {
+            createPetals();
+            createHearts();
+            typewriterEffect();
+        });
+    </script>
+</body>
+</html>
